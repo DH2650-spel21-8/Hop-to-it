@@ -1,6 +1,5 @@
-##Usage
+## Usage
 
----
 :warning: 
 >We're using [git-lfs](https://git-lfs.github.com/) to handle the project's asset files. 
 Make sure you have git-lfs installed before you start working with the repo. 
