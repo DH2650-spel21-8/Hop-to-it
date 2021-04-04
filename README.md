@@ -1,10 +1,10 @@
 ## Usage
 
-:warning: 
+:warning: :warning: :warning: 
 >We're using [git-lfs](https://git-lfs.github.com/) to handle the project's asset files. 
 Make sure you have git-lfs installed before you start working with the repo. 
 
-:warning:
+:warning: :warning: :warning: 
 
 Clone the repo using `git lfs clone <repo link>`, rather than the typical `git clone <repo link>`. 
 The latter will still work, it will however be much slower when fetching all the assets.
