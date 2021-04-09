@@ -6,8 +6,7 @@ Make sure you have git-lfs installed before you start working with the repo.
 
 :warning: :warning: :warning: 
 
-Clone the repo using `git lfs clone <repo link>`, rather than the typical `git clone <repo link>`. 
-The latter will still work, it will however be much slower when fetching all the assets.
+Clone the repo using `git clone <repo link>`. Cloning with `git lfs clone <repo link>` has been deprecated.
 
 You should then be able to open the project (navigate to the cloned folder) in Unity and it will generate the rest of the project files.
 
