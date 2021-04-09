@@ -37,7 +37,7 @@ public class PlayerMovementV2 : MonoBehaviour
 
         if (Movement.magnitude != 0f)
         {
-            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Cam.GetComponent<CameraMove>().sensivity * Time.deltaTime);
+            transform.Rotate(Vector3.up * Input.GetAxis("Mouse X") * Cam.GetComponent<CameraV2>().sensivity * Time.deltaTime);
 
 
             Quaternion CamRotation = Cam.rotation;
