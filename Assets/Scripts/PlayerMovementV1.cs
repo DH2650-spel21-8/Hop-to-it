@@ -6,6 +6,10 @@ public class PlayerMovementV1 : MonoBehaviour
 {
     public float movementSpeed = 10;
     public float turningSpeed = 60;
+    private bool player2;
+    private bool multiplayer; 
+    
+    //{ get {}; set; }; //C# properties
 
     private InputAction movementAction; 
 
@@ -34,5 +38,21 @@ public class PlayerMovementV1 : MonoBehaviour
     {
         var moveDelta = movementAction.ReadValue<Vector2>() * movementSpeed * Time.deltaTime;
         _rb.AddForce(new Vector3(moveDelta.x, 0, moveDelta.y));
+    }
+
+    public void EnableMultiplayer()
+    {
+        multiplayer = true;
+    }
+
+    public void DisableMultiplayer()
+    {
+        multiplayer = false;
+
+    }
+
+    public void SetPlayerTwo(bool p2)
+    {
+        player2 = p2;
     }
 }
