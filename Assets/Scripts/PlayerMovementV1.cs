@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovementV1 : MonoBehaviour
 {
@@ -10,55 +11,33 @@ public class PlayerMovementV1 : MonoBehaviour
     
     //{ get {}; set; }; //C# properties
 
+    private InputAction movementAction; 
+
     private Rigidbody _rb;
     private void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        player2 = false;
-        multiplayer = false;
+
+        var map = new InputActionMap("Simple Player Controller");
+
+        movementAction = map.AddAction("move", binding: "<Gamepad>/leftStick");
+        movementAction.AddCompositeBinding("Dpad")
+            .With("Up", "<Keyboard>/w")
+            .With("Up", "<Keyboard>/upArrow")
+            .With("Down", "<Keyboard>/s")
+            .With("Down", "<Keyboard>/downArrow")
+            .With("Left", "<Keyboard>/a")
+            .With("Left", "<Keyboard>/leftArrow")
+            .With("Right", "<Keyboard>/d")
+            .With("Right", "<Keyboard>/rightArrow");
+        
+        movementAction.Enable();
     }
 
     void Update()
     {
-        float horizontal = 0.0f;
-        float vertical = 0.0f;
-
-        //Debug.Log("Multiplayer: " + multiplayer + " Player 2: " + player2);
-
-        // Single player mode
-        if(!multiplayer && !player2)
-        {
-           // Debug.Log("Single player mode");
-            horizontal = Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime;
-            vertical = Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime;
-        }
-
-        // Two player mode where this player is player1
-        else if(multiplayer && !player2)
-        {
-            Debug.Log("Two player mode. Player1");
-            horizontal = Input.GetAxis("WASDHorizontal") * movementSpeed * Time.deltaTime;
-            vertical = Input.GetAxis("WASDVertical") * movementSpeed * Time.deltaTime;
-        }
-
-        // Two player mode where this player is player2
-        else if(multiplayer && player2)
-        {
-            Debug.Log("Two player mode. Player2");
-            horizontal = Input.GetAxis("ArrowHorizontal") * movementSpeed * Time.deltaTime;
-            vertical = Input.GetAxis("ArrowVertical") * movementSpeed * Time.deltaTime;
-        }
-
-        _rb.AddForce(new Vector3(horizontal, 0, 0));
-        //transform.Translate(horizontal, 0, 0);
-
-        _rb.AddForce(new Vector3(0, 0, vertical));
-        //transform.Translate(0, 0, vertical);
-    }
-
-    private void OnCollisionEnter(Collision other)
-    {
-        var hits = other.contacts;
+        var moveDelta = movementAction.ReadValue<Vector2>() * movementSpeed * Time.deltaTime;
+        _rb.AddForce(new Vector3(moveDelta.x, 0, moveDelta.y));
     }
 
     public void EnableMultiplayer()
