@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerHandler : MonoBehaviour
 {
+
+    public enum Mode
+    {
+        Multiplayer = 1,
+        Singleplayer = 0
+    }
     /*
      * Gameobject must be the players. 
      * They must have rigidbody, PlayerController script and Player Input component, set up with InputAction PlayerControls
@@ -14,14 +21,22 @@ public class PlayerHandler : MonoBehaviour
 
     private PlayerInput player1;
     private PlayerInput player2;
+    private PlayerInput activePlayer;
 
     private PlayerController p1Controller;
     private PlayerController p2Controller;
+    private PlayerController activeController;
 
-    private bool multiplayer;
+    private PlayerInputManager _inputManager;
+
+    private Mode _mode;
+    private InputAction swapAction;
+    private InputAction switchAction;
+
     // Start is called before the first frame update
     void Start()
     {
+        _inputManager = GetComponent<PlayerInputManager>();
         p1Controller = Bob.GetComponent<PlayerController>();
         player1 = p1Controller.playerInput;
 
@@ -33,43 +48,81 @@ public class PlayerHandler : MonoBehaviour
         player2 = p2Controller.playerInput;
         player2.SwitchCurrentControlScheme("ArrowWASDGamepad");
 
-        p1Controller.enabled = true;
-        p2Controller.enabled = false;
+        activeController = p2Controller;
+        activePlayer = player2;
+        
+        SetActivePlayer(p1Controller);
 
-        multiplayer = false;
+        _mode = Mode.Singleplayer;
+
+        var map = new InputActionMap("Swap");
+        swapAction = map.AddAction("swap", binding: "<Keyboard>/1");
+        switchAction = map.AddAction("switchMode", binding: "<Keyboard>/2");
+        
+        swapAction.performed += context =>
+        {
+            SwapPlayers();
+        };
+        switchAction.performed += context =>
+        {
+            _mode = 1 - _mode;
+            switch (_mode)
+            {
+                case Mode.Multiplayer:
+                    p1Controller.enabled = true;
+                    p2Controller.enabled = true;
+                    player1.camera.enabled = true;
+                    player2.camera.enabled = true;
+                    player1.SwitchCurrentControlScheme("WASD");
+                    player2.SwitchCurrentControlScheme("ArrowKeys");
+                    _inputManager.splitScreen = true;
+                    
+                    swapAction.Disable();
+                    break;
+                case Mode.Singleplayer:
+                    p1Controller.enabled = false;
+                    p2Controller.enabled = false;
+                    SwapPlayers();
+                    player1.SwitchCurrentControlScheme("ArrowWASDGamepad");
+                    player2.SwitchCurrentControlScheme("ArrowWASDGamepad");
+                    _inputManager.splitScreen = false;
+                    
+                    swapAction.Enable();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        };
+        
+        swapAction.Enable();
+        switchAction.Enable();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void SetActivePlayer(PlayerController player)
     {
-        if (Keyboard.current.digit1Key.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame)
-        {
-            // Yeah I know...  
-            if (!multiplayer)
-            {
-                // Hey, it's only stupid if it doesn't work!
-                p1Controller.enabled = !p1Controller.enabled;
-                p2Controller.enabled = !p2Controller.enabled;
-            }
-        } else if (Keyboard.current.digit2Key.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame)
-        {
-            // Reset to singleplayer logic
-            if (multiplayer)
-            {
-                p1Controller.enabled = true;
-                p2Controller.enabled = false;
-                player1.SwitchCurrentControlScheme("ArrowWASDGamepad");
-                player2.SwitchCurrentControlScheme("ArrowWASDGamepad");
-            }
-            else
-            {
-                // Currently no way to determine input device. Until then, set different controlscheme
-                p1Controller.enabled = true;
-                p2Controller.enabled = true;
-                player1.SwitchCurrentControlScheme("WASD");
-                player2.SwitchCurrentControlScheme("ArrowKeys");
-            }
-            multiplayer = !multiplayer;
-        }
+        Camera activeCam = activeController.playerInput.camera;
+        Camera playerCam = player.playerInput.camera;
+        activeCam.enabled = false;
+        activeController.enabled = false;
+
+        activeController = player;
+        activePlayer = activeController.playerInput;
+        activeController.enabled = true;
+        playerCam.enabled = true;
+    }
+    
+    private void SwapPlayers()
+    {
+        SetActivePlayer(p1Controller.enabled ? p2Controller : p1Controller);
+    }
+
+    public void OnPlayerJoined(PlayerInput player)
+    {
+        _mode = Mode.Multiplayer;
+    }
+
+    public void OnPlayerLeft(PlayerInput player)
+    {
+        _mode = Mode.Singleplayer;
     }
 }

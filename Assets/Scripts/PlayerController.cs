@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[RequireComponent(typeof(PlayerInput), typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]
@@ -11,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
 
     public PlayerInput playerInput;
+
+    public Transform Hand;
 
 
     private void Start()
