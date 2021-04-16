@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
 
     public PlayerInput playerInput;
 
+    public Transform Hand;
+
 
     private void Start()
     {

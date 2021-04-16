@@ -80,6 +80,8 @@ public class PlayerHandler : MonoBehaviour
                     swapAction.Disable();
                     break;
                 case Mode.Singleplayer:
+                    p1Controller.enabled = false;
+                    p2Controller.enabled = false;
                     SwapPlayers();
                     player1.SwitchCurrentControlScheme("ArrowWASDGamepad");
                     player2.SwitchCurrentControlScheme("ArrowWASDGamepad");
