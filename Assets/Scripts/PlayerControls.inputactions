@@ -17,7 +17,7 @@
                     "name": "Interact",
                     "type": "Value",
                     "id": "c8a57a79-0809-4568-9071-f6afd1efffa3",
-                    "expectedControlType": "Key",
+                    "expectedControlType": "Digital",
                     "processors": "",
                     "interactions": ""
                 }
@@ -79,61 +79,6 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "ArrowKeys",
-                    "id": "2b474b3b-7a15-4951-a421-a40f775890ef",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "WASD",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "a88d78bb-b737-43aa-b92d-a2ee6c49d9fb",
-                    "path": "<Keyboard>/upArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowKeys",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "cdbeb263-a5ef-4795-bba3-eefecb32c22d",
-                    "path": "<Keyboard>/downArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowKeys",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "644d32aa-9726-4bc6-84f2-a5962c590e34",
-                    "path": "<Keyboard>/leftArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowKeys",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "0689dc06-de95-4f8d-bf20-941ff22fddde",
-                    "path": "<Keyboard>/rightArrow",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowKeys",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "13b4d28c-3e5e-4539-8304-351771de8bad",
                     "path": "<Gamepad>/leftStick",
@@ -145,78 +90,12 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "WASD",
-                    "id": "4953ccf1-6483-4ccb-8db4-8c57cc16346f",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowWASDGamepad",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "1865daac-b7e7-4852-9804-4ca98a749a1e",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowWASDGamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "4a8a6ed1-a385-4be2-883d-a0a26cf7cb23",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowWASDGamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "e6ae0fc9-1d79-4f89-8286-a5ce37fa7191",
-                    "path": "<Keyboard>/a",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowWASDGamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "942379d0-b8a0-4588-968b-d2ce03a33a68",
-                    "path": "<Keyboard>/d",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowWASDGamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "fcc5b073-6618-4c9b-82ea-26dbf1ad5cb1",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "ArrowWASDGamepad",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
                     "name": "ArrowKeys",
                     "id": "edc132f8-552d-4a77-bf29-d4b986267756",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ArrowWASDGamepad",
+                    "groups": "",
                     "action": "Move",
                     "isComposite": true,
                     "isPartOfComposite": false
@@ -227,7 +106,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ArrowWASDGamepad",
+                    "groups": "ArrowKeys",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -238,7 +117,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ArrowWASDGamepad",
+                    "groups": "ArrowKeys",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -249,7 +128,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ArrowWASDGamepad",
+                    "groups": "ArrowKeys",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -260,21 +139,10 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ArrowWASDGamepad",
+                    "groups": "ArrowKeys",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
-                },
-                {
-                    "name": "",
-                    "id": "3f37436c-8472-4350-a1b9-f1b39e6c3cd9",
-                    "path": "*/{PrimaryAction}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "WASD;ArrowKeys;Gamepad;ArrowWASDGamepad",
-                    "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
                 },
                 {
                     "name": "",
@@ -282,54 +150,8 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "WASD;ArrowKeys;ArrowWASDGamepad",
+                    "groups": "WASD;ArrowKeys",
                     "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                }
-            ]
-        },
-        {
-            "name": "Camera",
-            "id": "9419be14-562a-4ec2-b335-10b93adc247e",
-            "actions": [
-                {
-                    "name": "Move X",
-                    "type": "Value",
-                    "id": "76cead0e-89cf-46cc-8f4c-1494ff25c359",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Move Y",
-                    "type": "Value",
-                    "id": "3e949982-661a-42b9-ac9b-c894f4e56966",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": ""
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "",
-                    "id": "a76d834c-5608-4f8c-bb56-77f46a0d1366",
-                    "path": "<Pointer>/delta/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "WASD;ArrowKeys;ArrowWASDGamepad",
-                    "action": "Move X",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "014c15a1-4cb9-41d5-b4fe-a36b483ab88c",
-                    "path": "<Pointer>/delta/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "WASD;ArrowWASDGamepad;ArrowKeys",
-                    "action": "Move Y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -374,27 +196,6 @@
                     "isOR": false
                 }
             ]
-        },
-        {
-            "name": "ArrowWASDGamepad",
-            "bindingGroup": "ArrowWASDGamepad",
-            "devices": [
-                {
-                    "devicePath": "<Gamepad>",
-                    "isOptional": true,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<Keyboard>",
-                    "isOptional": true,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "NONE",
-            "bindingGroup": "NONE",
-            "devices": []
         }
     ]
 }

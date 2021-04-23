@@ -32,9 +32,9 @@ public class PlayerController : MonoBehaviour
     }
 
     [UsedImplicitly]
-    public void OnMove(InputValue value)
+    public void OnMove(InputAction.CallbackContext context)
     {
-        _movementInput = value.Get<Vector2>();
+        _movementInput = context.ReadValue<Vector2>();
     }
 
     [UsedImplicitly]
