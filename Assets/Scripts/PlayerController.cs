@@ -1,45 +1,60 @@
+using Cinemachine;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput), typeof(Rigidbody))]
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private float movementSpeed = 10.0f;
-    private Vector2 movementInput = Vector2.zero;
+    private Vector2 _movementInput = Vector2.zero;
 
-    private Rigidbody _rb;
+    private CharacterController _controller;
 
+    public float Speed = 6f;
+    public float TurnSmoothTime = 0.1f;
+    private float _turnSmoothVelocity;
 
-    public PlayerInput playerInput;
+    public CinemachineFreeLook Camera;
+
+    public PlayerInput PlayerInput;
 
     public Transform Hand;
 
+    private Camera _playerCam;
 
     private void Start()
     {
-        _rb = GetComponent<Rigidbody>();
-        playerInput = gameObject.GetComponent<PlayerInput>();
-        playerInput.neverAutoSwitchControlSchemes = false;
+        _controller = GetComponent<CharacterController>();
+        PlayerInput = GetComponent<PlayerInput>();
+        PlayerInput.neverAutoSwitchControlSchemes = false;
+
+        _playerCam = PlayerInput.camera;
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    [UsedImplicitly]
+    public void OnMove(InputValue value)
     {
-        movementInput = context.ReadValue<Vector2>();
+        _movementInput = value.Get<Vector2>();
     }
 
-    void Update()
+    [UsedImplicitly]
+    public void OnInteract(InputValue value)
     {
+        
+    } 
 
-        Vector3 move = new Vector3(movementInput.x, 0, movementInput.y);
-        _rb.AddForce(move * Time.deltaTime * movementSpeed);
-        /*
-         * This turns the player and camera facing the direction they're moving in
-        if (move != Vector3.zero)
-        {
-            gameObject.transform.forward = move;
-        }
-        */
+    private void Update()
+    {
+        var direction = new Vector3(_movementInput.x, 0, _movementInput.y);
+
+        if (!(direction.sqrMagnitude >= 0.01f)) return;
+        
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _playerCam.transform.eulerAngles.y;
+        float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity, TurnSmoothTime);
+        transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            
+        Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+        _controller.Move((moveDir.normalized * Speed + Physics.gravity) * Time.deltaTime);
     }
 
 }

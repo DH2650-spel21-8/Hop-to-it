@@ -25,6 +25,14 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Value"",
+                    ""id"": ""c8a57a79-0809-4568-9071-f6afd1efffa3"",
+                    ""expectedControlType"": ""Key"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -269,6 +277,74 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f37436c-8472-4350-a1b9-f1b39e6c3cd9"",
+                    ""path"": ""*/{PrimaryAction}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""WASD;ArrowKeys;Gamepad;ArrowWASDGamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7262d022-83e9-4f23-a8b2-fa3a455f0462"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""WASD;ArrowKeys;ArrowWASDGamepad"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""9419be14-562a-4ec2-b335-10b93adc247e"",
+            ""actions"": [
+                {
+                    ""name"": ""Move X"",
+                    ""type"": ""Value"",
+                    ""id"": ""76cead0e-89cf-46cc-8f4c-1494ff25c359"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Move Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""3e949982-661a-42b9-ac9b-c894f4e56966"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a76d834c-5608-4f8c-bb56-77f46a0d1366"",
+                    ""path"": ""<Pointer>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""WASD;ArrowKeys;ArrowWASDGamepad"",
+                    ""action"": ""Move X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""014c15a1-4cb9-41d5-b4fe-a36b483ab88c"",
+                    ""path"": ""<Pointer>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""WASD;ArrowWASDGamepad;ArrowKeys"",
+                    ""action"": ""Move Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -338,6 +414,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_MoveX = m_Camera.FindAction("Move X", throwIfNotFound: true);
+        m_Camera_MoveY = m_Camera.FindAction("Move Y", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -388,11 +469,13 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     private readonly InputActionMap m_Player;
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
         public PlayerActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -405,6 +488,9 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -412,10 +498,54 @@ public class @PlayerControls : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private ICameraActions m_CameraActionsCallbackInterface;
+    private readonly InputAction m_Camera_MoveX;
+    private readonly InputAction m_Camera_MoveY;
+    public struct CameraActions
+    {
+        private @PlayerControls m_Wrapper;
+        public CameraActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveX => m_Wrapper.m_Camera_MoveX;
+        public InputAction @MoveY => m_Wrapper.m_Camera_MoveY;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void SetCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterface != null)
+            {
+                @MoveX.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveX;
+                @MoveX.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveX;
+                @MoveX.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveX;
+                @MoveY.started -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveY;
+                @MoveY.performed -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveY;
+                @MoveY.canceled -= m_Wrapper.m_CameraActionsCallbackInterface.OnMoveY;
+            }
+            m_Wrapper.m_CameraActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MoveX.started += instance.OnMoveX;
+                @MoveX.performed += instance.OnMoveX;
+                @MoveX.canceled += instance.OnMoveX;
+                @MoveY.started += instance.OnMoveY;
+                @MoveY.performed += instance.OnMoveY;
+                @MoveY.canceled += instance.OnMoveY;
+            }
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     private int m_WASDSchemeIndex = -1;
     public InputControlScheme WASDScheme
     {
@@ -464,5 +594,11 @@ public class @PlayerControls : IInputActionCollection, IDisposable
     public interface IPlayerActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnMoveX(InputAction.CallbackContext context);
+        void OnMoveY(InputAction.CallbackContext context);
     }
 }

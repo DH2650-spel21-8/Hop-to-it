@@ -12,6 +12,14 @@
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Interact",
+                    "type": "Value",
+                    "id": "c8a57a79-0809-4568-9071-f6afd1efffa3",
+                    "expectedControlType": "Key",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -256,6 +264,74 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "3f37436c-8472-4350-a1b9-f1b39e6c3cd9",
+                    "path": "*/{PrimaryAction}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "WASD;ArrowKeys;Gamepad;ArrowWASDGamepad",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7262d022-83e9-4f23-a8b2-fa3a455f0462",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "WASD;ArrowKeys;ArrowWASDGamepad",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "9419be14-562a-4ec2-b335-10b93adc247e",
+            "actions": [
+                {
+                    "name": "Move X",
+                    "type": "Value",
+                    "id": "76cead0e-89cf-46cc-8f4c-1494ff25c359",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Move Y",
+                    "type": "Value",
+                    "id": "3e949982-661a-42b9-ac9b-c894f4e56966",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a76d834c-5608-4f8c-bb56-77f46a0d1366",
+                    "path": "<Pointer>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "WASD;ArrowKeys;ArrowWASDGamepad",
+                    "action": "Move X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "014c15a1-4cb9-41d5-b4fe-a36b483ab88c",
+                    "path": "<Pointer>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "WASD;ArrowWASDGamepad;ArrowKeys",
+                    "action": "Move Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

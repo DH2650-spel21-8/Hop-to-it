@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,104 +18,130 @@ public class PlayerHandler : MonoBehaviour
      * Gameobject must be the players. 
      * They must have rigidbody, PlayerController script and Player Input component, set up with InputAction PlayerControls
      */
-    public GameObject Bob;
-    public GameObject Hopsy;
 
-    private PlayerInput player1;
-    private PlayerInput player2;
-    private PlayerInput activePlayer;
+    private readonly List<PlayerInput> _players = new List<PlayerInput>();
+    private readonly List<Camera> _cameras = new List<Camera>();
+    public List<PlayerController> Controllers = new List<PlayerController>();
 
-    private PlayerController p1Controller;
-    private PlayerController p2Controller;
-    private PlayerController activeController;
+    private int _active = 0;
 
     private PlayerInputManager _inputManager;
 
     private Mode _mode;
-    private InputAction swapAction;
-    private InputAction switchAction;
+    private InputAction _swapAction;
+    private InputAction _switchAction;
 
     // Start is called before the first frame update
     void Start()
     {
         _inputManager = GetComponent<PlayerInputManager>();
-        p1Controller = Bob.GetComponent<PlayerController>();
-        player1 = p1Controller.playerInput;
+        
+        foreach (PlayerController controller in Controllers)
+        {
+            _players.Add(controller.PlayerInput);
+        }
 
         // To use any controller during singleplayer mode
         // Currently we assign these schemes since we don't have a menu that selects input
-        player1.SwitchCurrentControlScheme("ArrowWASDGamepad");
+        foreach (PlayerInput player in _players)
+        {
+            _cameras.Add(player.camera);
+        }
 
-        p2Controller = Hopsy.GetComponent<PlayerController>();
-        player2 = p2Controller.playerInput;
-        player2.SwitchCurrentControlScheme("ArrowWASDGamepad");
-
-        activeController = p2Controller;
-        activePlayer = player2;
-        
-        SetActivePlayer(p1Controller);
+        _active = Controllers.Count - 1;
+        SetActivePlayer(0);
 
         _mode = Mode.Singleplayer;
-
-        var map = new InputActionMap("Swap");
-        swapAction = map.AddAction("swap", binding: "<Keyboard>/1");
-        switchAction = map.AddAction("switchMode", binding: "<Keyboard>/2");
         
-        swapAction.performed += context =>
+        SetupActions();
+    }
+
+    private void SetupActions()
+    {
+        var map = new InputActionMap("Swap");
+        _swapAction = map.AddAction("swap", binding: "<Keyboard>/1");
+        _switchAction = map.AddAction("switchMode", binding: "<Keyboard>/2");
+        
+        _swapAction.performed += context =>
         {
-            SwapPlayers();
+            CyclePlayers();
         };
-        switchAction.performed += context =>
+        _switchAction.performed += context =>
         {
             _mode = 1 - _mode;
             switch (_mode)
             {
                 case Mode.Multiplayer:
-                    p1Controller.enabled = true;
-                    p2Controller.enabled = true;
-                    player1.camera.enabled = true;
-                    player2.camera.enabled = true;
-                    player1.SwitchCurrentControlScheme("WASD");
-                    player2.SwitchCurrentControlScheme("ArrowKeys");
+
+                    foreach ((PlayerController controller, Camera camera) in Controllers.Zip(_cameras, (controller, camera) => (controller, camera)))
+                    {
+                        controller.enabled = true;
+                        camera.enabled = true;
+                    }
+
                     _inputManager.splitScreen = true;
                     
-                    swapAction.Disable();
+                    _swapAction.Disable();
                     break;
                 case Mode.Singleplayer:
-                    p1Controller.enabled = false;
-                    p2Controller.enabled = false;
-                    SwapPlayers();
-                    player1.SwitchCurrentControlScheme("ArrowWASDGamepad");
-                    player2.SwitchCurrentControlScheme("ArrowWASDGamepad");
+                    foreach ((PlayerController controller, Camera camera) in Controllers.Zip(_cameras, (controller, camera) => (controller, camera)))
+                    {
+                        controller.enabled = false;
+                        camera.enabled = false;
+                    }
+                    
+                    SetActivePlayer(0);
+                    
                     _inputManager.splitScreen = false;
                     
-                    swapAction.Enable();
+                    _swapAction.Enable();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         };
         
-        swapAction.Enable();
-        switchAction.Enable();
+        _swapAction.Enable();
+        _switchAction.Enable();
     }
 
-    private void SetActivePlayer(PlayerController player)
+    private void SetActivePlayer(int index)
     {
-        Camera activeCam = activeController.playerInput.camera;
-        Camera playerCam = player.playerInput.camera;
-        activeCam.enabled = false;
-        activeController.enabled = false;
+        if (index >= Controllers.Count)
+        {
+            return;
+        }
 
-        activeController = player;
-        activePlayer = activeController.playerInput;
-        activeController.enabled = true;
-        playerCam.enabled = true;
+        int prev = _active;
+
+        PlayerInput prevPlayer = _players[prev];
+        PlayerInput newPlayer = _players[index];
+        
+        PlayerController prevController = Controllers[prev];
+        PlayerController newController = Controllers[index];
+
+        var prevCam = _cameras[prev];
+        var newCam = _cameras[index];
+
+        prevCam.enabled = false;
+        newCam.enabled = true;
+        
+        prevController.enabled = false;
+        newController.enabled = true;
+        
+        _active = index;
     }
     
-    private void SwapPlayers()
+    private void CyclePlayers()
     {
-        SetActivePlayer(p1Controller.enabled ? p2Controller : p1Controller);
+        int current = _active;
+        current++;
+        if (current == Controllers.Count)
+        {
+            current = 0;
+        }
+        
+        SetActivePlayer(current);
     }
 
     public void OnPlayerJoined(PlayerInput player)
