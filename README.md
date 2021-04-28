@@ -1,12 +1,6 @@
 ## Usage
 
-:warning: :warning: :warning: 
->We're using [git-lfs](https://git-lfs.github.com/) to handle the project's asset files. 
-Make sure you have git-lfs installed before you start working with the repo. 
-
-:warning: :warning: :warning: 
-
-Clone the repo using `git clone <repo link>`. Cloning with `git lfs clone <repo link>` has been deprecated.
+Clone the repo using `git clone <repo link>`.
 
 You should then be able to open the project (navigate to the cloned folder) in Unity and it will generate the rest of the project files.
 
