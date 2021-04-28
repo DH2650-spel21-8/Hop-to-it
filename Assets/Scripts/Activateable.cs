@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class Activateable : MonoBehaviour
 {
     public bool Toggle;
-    public virtual void OnActivate(PlayerController player) {}
+    protected virtual void OnActivate(PlayerController player) {}
 
     private Action<InputAction.CallbackContext> _callback;
 
@@ -24,7 +24,7 @@ public class Activateable : MonoBehaviour
 
             try
             {
-                controller.PlayerInput.currentActionMap.FindAction("Interact").performed += _callback;
+                controller.PlayerInput.currentActionMap.FindAction("Interact", true).performed += _callback;
             }
             catch (ArgumentException ae)
             {
@@ -41,7 +41,7 @@ public class Activateable : MonoBehaviour
             
             try
             {
-                controller.PlayerInput.currentActionMap.FindAction("Interact").performed -= _callback;
+                controller.PlayerInput.currentActionMap.FindAction("Interact", true).performed -= _callback;
             }
             catch (ArgumentException ae)
             {
