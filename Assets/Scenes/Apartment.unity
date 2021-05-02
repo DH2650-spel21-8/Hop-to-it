@@ -2169,6 +2169,7 @@ GameObject:
   - component: {fileID: 29515359}
   - component: {fileID: 29515358}
   - component: {fileID: 29515357}
+  - component: {fileID: 29515361}
   m_Layer: 0
   m_Name: Toilet wall with door
   m_TagString: Untagged
@@ -3203,6 +3204,20 @@ Transform:
   m_Father: {fileID: 629720735}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &29515361
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29515356}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2058734535}
 --- !u!1 &39689284
 GameObject:
   m_ObjectHideFlags: 0
@@ -3904,8 +3919,8 @@ Transform:
   m_Father: {fileID: 629720735}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
---- !u!64 &147850097
-MeshCollider:
+--- !u!65 &147850097
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -3914,10 +3929,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1551393859}
+  serializedVersion: 2
+  m_Size: {x: 0.6317851, y: 5.6443043, z: 9.921024}
+  m_Center: {x: 0.31589255, y: 2.8221521, z: -0.0030684478}
 --- !u!33 &147850098
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -9416,6 +9430,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4833389357722890, guid: 2e2ab467fad9033438c76e2c50d6661c, type: 3}
   m_PrefabInstance: {fileID: 1468675317}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &929808941 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1010033139664216, guid: 97b10c95ce8e2d64f9cebc43b086df00, type: 3}
+  m_PrefabInstance: {fileID: 463566934}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &929808942
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929808941}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 4, z: 3}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1001 &943005329
 PrefabInstance:
   m_ObjectHideFlags: 0
