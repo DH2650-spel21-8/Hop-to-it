@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class Grabbable : Activateable
+public class Grabbable : Interactable
 {
     private SphereCollider _col;
     public float Radius;
@@ -15,7 +15,7 @@ public class Grabbable : Activateable
         _col.radius = Radius;
     }
 
-    protected override void OnActivate(PlayerController player)
+    protected override void OnInteract(PlayerController player)
     {
         if (_hand)
         {

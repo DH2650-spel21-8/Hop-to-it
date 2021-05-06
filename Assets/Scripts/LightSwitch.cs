@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class LightSwitch : Activateable
+public class LightSwitch : Interactable
 {
     public Light Light;
 
-    protected override void OnActivate(PlayerController player)
+    protected override void OnInteract(PlayerController player)
     {
         if (Toggle)
         {

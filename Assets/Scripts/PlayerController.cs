@@ -19,6 +19,20 @@ public class PlayerController : MonoBehaviour
     public PlayerInput PlayerInput;
 
     public Transform Hand;
+    private Grabbable _heldObject;
+    public Grabbable HeldObject
+    {
+        get
+        {
+            return _heldObject;
+        }
+        set
+        {
+            _heldObject = value;
+        }
+    }
+
+    public bool IsHolding => HeldObject != null;
 
     private Camera _playerCam;
 
@@ -41,7 +55,7 @@ public class PlayerController : MonoBehaviour
     public void OnInteract(InputValue value)
     {
         
-    } 
+    }
 
     private void Update()
     {

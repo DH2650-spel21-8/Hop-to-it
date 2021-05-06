@@ -2,11 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Collider))]
-public class Activateable : MonoBehaviour
+public class Interactable : MonoBehaviour
 {
     public bool Toggle;
-    protected virtual void OnActivate(PlayerController player) {}
+    protected virtual void OnInteract(PlayerController player) {}
 
     private Action<InputAction.CallbackContext> _callback;
 
@@ -19,7 +18,7 @@ public class Activateable : MonoBehaviour
             // create callback to bind the Activateable to the player's controls
             _callback = _ =>
             {
-                OnActivate(controller);
+                OnInteract(controller);
             };
 
             try
