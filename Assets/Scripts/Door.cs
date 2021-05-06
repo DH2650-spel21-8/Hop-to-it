@@ -6,6 +6,7 @@ public class Door : Interactable
 {
     public GameObject DoorObject;
 
+    public float OpenAngle = 90f;
     private bool _open = false;
     public float OpenTime = 1;
 
@@ -16,11 +17,11 @@ public class Door : Interactable
         float rot = 0;
         if (angle < 0)
         {
-            rot = -90;
+            rot = -OpenAngle;
         }
         else
         {
-            rot = 90;
+            rot = OpenAngle;
         }
 
 
