@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     {
         var direction = new Vector3(_movementInput.x, 0, _movementInput.y);
 
+        // Only move the player if we receive sufficient input
         if (!(direction.sqrMagnitude >= 0.01f)) return;
         
         float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + _playerCam.transform.eulerAngles.y;

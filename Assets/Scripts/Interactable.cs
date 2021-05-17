@@ -1,13 +1,20 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
+/**
+ * The base class for objects that the player can interact with.
+ * Based on trigger volumes to determine interaction availability.
+ */
 public class Interactable : MonoBehaviour
 {
     public bool Toggle;
     protected virtual void OnInteract(PlayerController player) {}
 
     private Action<InputAction.CallbackContext> _callback;
+
+    public UnityEvent<bool> OnInteraction;
 
     private void OnTriggerEnter(Collider other)
     {
