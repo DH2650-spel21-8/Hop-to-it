@@ -26,6 +26,7 @@ public class Interactable : MonoBehaviour
             _callback = _ =>
             {
                 OnInteract(controller);
+                OnInteraction.Invoke(Toggle);
             };
 
             try
