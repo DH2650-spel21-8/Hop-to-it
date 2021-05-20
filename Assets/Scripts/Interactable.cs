@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -9,7 +11,7 @@ using UnityEngine.InputSystem;
  */
 public class Interactable : MonoBehaviour
 {
-    public bool Toggle;
+    public bool Toggle = false;
     protected virtual void OnInteract(PlayerController player) {}
 
     private Action<InputAction.CallbackContext> _callback;
@@ -22,7 +24,7 @@ public class Interactable : MonoBehaviour
         {
             // show a prompt near the player or near the switch for activating
             
-            // create callback to bind the Activateable to the player's controls
+            // create callback to bind this Interactable to the player's controls as long as the player is within the trigger
             _callback = _ =>
             {
                 OnInteract(controller);

@@ -5,21 +5,28 @@ using UnityEngine.Events;
 
 public class Objective : MonoBehaviour
 {
-    public List<Interactable> Requirements;
+    public Interactable Requirement;
     public bool Complete;
     
-    public UnityEvent OnCompletion;
+    public UnityEvent<bool> OnCompletion;
 
     private void Start()
     {
-        foreach (Interactable obj in Requirements)
+        Requirement.OnInteraction.AddListener(toggle =>
         {
-            
-        }
+            if (toggle)
+            {
+                Complete = !Complete;
+                OnCompletion.Invoke(Complete);
+            }
+            else
+            {
+                if (!Complete)
+                {
+                    OnCompletion.Invoke(true);
+                    Complete = true;
+                }
+            }
+        });
     }
-}
-
-public struct ObjectiveInfo
-{
-    
 }

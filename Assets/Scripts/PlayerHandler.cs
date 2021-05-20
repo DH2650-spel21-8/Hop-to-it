@@ -44,7 +44,7 @@ public class PlayerHandler : MonoBehaviour
         }
 
         _active = Controllers.Count - 1;
-        SetActivePlayer(0);
+        SetActivePlayer(1);
 
         _mode = Mode.Singleplayer;
         

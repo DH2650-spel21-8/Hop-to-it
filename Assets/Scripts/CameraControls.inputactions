@@ -1,12 +1,12 @@
 {
-    "name": "MouseControls",
+    "name": "CameraControls",
     "maps": [
         {
-            "name": "Mouse",
+            "name": "Camera",
             "id": "4af2a004-ed69-4b12-8fd0-8e5af6ab2b13",
             "actions": [
                 {
-                    "name": "Mouse Look",
+                    "name": "Look",
                     "type": "PassThrough",
                     "id": "4cb4e7fc-f543-4d0c-b035-a64acaf0a2f3",
                     "expectedControlType": "Vector2",
@@ -22,7 +22,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Mouse Look",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -33,7 +33,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Mouse Look",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
