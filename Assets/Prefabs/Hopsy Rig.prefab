@@ -1155,11 +1155,15 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: c8a57a79-0809-4568-9071-f6afd1efffa3
     m_ActionName: Player/Interact[/Mouse/leftButton,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 01c6a58d-e4de-4f33-98e2-0b452ee0466d
+    m_ActionName: Player/Look[/Mouse/delta]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: ArrowKeys
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 212918214404681460}
 --- !u!114 &8900451670749003455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,7 +1178,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 6
   TurnSmoothTime: 0.1
-  Camera: {fileID: 0}
+  Camera: {fileID: 212918213724321118}
   PlayerInput: {fileID: 8900451670749003445}
   Hand: {fileID: 8900451670302228698}
 --- !u!143 &8900451670749003444

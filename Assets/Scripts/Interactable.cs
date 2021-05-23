@@ -14,11 +14,11 @@ public class Interactable : MonoBehaviour
     public bool Toggle = false;
     protected virtual void OnInteract(PlayerController player) {}
 
-    private Action<InputAction.CallbackContext> _callback;
+    private Action<InputAction.CallbackContext> _callback = null;
 
     public UnityEvent<bool> OnInteraction;
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out PlayerController controller))
         {
@@ -42,8 +42,10 @@ public class Interactable : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
+        if (_callback == null) return;
+        
         if (other.TryGetComponent(out PlayerController controller))
         {
             // hide prompt and remove action
