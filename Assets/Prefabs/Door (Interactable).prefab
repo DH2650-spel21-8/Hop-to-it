@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6674406989608528618}
   - component: {fileID: 6635615583487785536}
   m_Layer: 0
-  m_Name: door2Portal
+  m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6693138085304721676}
   m_Layer: 0
-  m_Name: Door2 (1)
+  m_Name: Door (Interactable)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: 6697930001602066258}
   - component: {fileID: 6697930001602066261}
   m_Layer: 0
-  m_Name: door2
+  m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -253,6 +253,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Toggle: 1
+  OnInteraction:
+    m_PersistentCalls:
+      m_Calls: []
   DoorObject: {fileID: 6698475377309903324}
   OpenAngle: 90
   OpenTime: 1

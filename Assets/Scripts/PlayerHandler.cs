@@ -12,13 +12,13 @@ public class PlayerHandler : MonoBehaviour
         Multiplayer = 1,
         Singleplayer = 0
     }
-    /*
-     * Gameobject must be the players. 
-     * They must have rigidbody, PlayerController script and Player Input component, set up with InputAction PlayerControls
-     */
 
+    // Assigned from Controllers
     private readonly List<PlayerInput> _players = new List<PlayerInput>();
+    // Assigned from Cameras associated with _players
     private readonly List<Camera> _cameras = new List<Camera>();
+    
+    // Represents every player in the game
     public List<PlayerController> Controllers = new List<PlayerController>();
 
     private int _active = 0;
@@ -29,8 +29,7 @@ public class PlayerHandler : MonoBehaviour
     private InputAction _swapAction;
     private InputAction _switchAction;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _inputManager = GetComponent<PlayerInputManager>();
         
@@ -38,16 +37,14 @@ public class PlayerHandler : MonoBehaviour
         {
             _players.Add(controller.PlayerInput);
         }
-
-        // To use any controller during singleplayer mode
-        // Currently we assign these schemes since we don't have a menu that selects input
+        
         foreach (PlayerInput player in _players)
         {
             _cameras.Add(player.camera);
         }
 
         _active = Controllers.Count - 1;
-        SetActivePlayer(0);
+        SetActivePlayer(1);
 
         _mode = Mode.Singleplayer;
         
@@ -66,11 +63,13 @@ public class PlayerHandler : MonoBehaviour
         };
         _switchAction.performed += context =>
         {
+            // Switch modes
             _mode = 1 - _mode;
             switch (_mode)
             {
                 case Mode.Multiplayer:
-
+                    // In multiplayer mode, all controllers are active, and split-screen is enabled
+                    // Cycling players is disabled in this mode
                     foreach ((PlayerController controller, Camera camera) in Controllers.Zip(_cameras, (controller, camera) => (controller, camera)))
                     {
                         controller.enabled = true;
@@ -82,6 +81,7 @@ public class PlayerHandler : MonoBehaviour
                     _swapAction.Disable();
                     break;
                 case Mode.Singleplayer:
+                    // In singleplayer mode only one controller is active at a time (set with SetActivePlayer(playerIndex)), and split-screen is disabled
                     foreach ((PlayerController controller, Camera camera) in Controllers.Zip(_cameras, (controller, camera) => (controller, camera)))
                     {
                         controller.enabled = false;

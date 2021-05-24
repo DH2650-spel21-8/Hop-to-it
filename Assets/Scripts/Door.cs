@@ -2,6 +2,13 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+/**
+ * An interactable door in the game.
+ * The player can open and close the door based on where they stand in relation to the hinge.
+ * Requires that the door object pivot around its hinge for the desired effect.
+ *
+ * Place the Interactible's trigger near the handle.
+ */
 public class Door : Interactable
 {
     public GameObject DoorObject;
