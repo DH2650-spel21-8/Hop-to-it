@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="P2_avatar" style="background-image: url(&apos;/Assets/UI/Hopsy.png&apos;); width: 91px; height: 91px; -unity-background-scale-mode: stretch-to-fill; position: absolute; left: auto; top: 10px; visibility: visible; right: 10px;" />
+    <ui:VisualElement name="P2_indicator" style="background-image: url(&apos;/Assets/UI/P2.png&apos;); width: 40px; height: 40px; left: auto; top: 67px; position: absolute; right: 67px;" />
+    <ui:VisualElement name="P1_avatar" style="background-image: url(&apos;/Assets/UI/Bob.png&apos;); width: 91px; height: 91px; -unity-background-scale-mode: stretch-to-fill; position: absolute; left: 10px; top: 10px; visibility: visible;" />
+    <ui:VisualElement name="P1_indicator" style="background-image: url(&apos;/Assets/UI/P1.png&apos;); width: 40px; height: 40px; left: 67px; top: 67px; position: absolute;" />
+    <ui:VisualElement name="P1_objective" style="background-image: url(&apos;/Assets/UI/Obj_P1.png&apos;); width: 256px; height: 100px; position: absolute; bottom: 20px; left: 20px;">
+        <ui:Label text="1/5: LET THERE BE LIGHT" display-tooltip-when-elided="true" name="P1_objective_title" style="font-size: 18px; -unity-font: resource(&apos;FlatSkin/Font/Roboto-BlackItalic&apos;); height: 27px; width: 233px; color: rgb(255, 255, 255); top: 15px; left: 15px;" />
+        <ui:Label text="Find the light switch!" display-tooltip-when-elided="true" name="P1_objective_description" style="font-size: 14px; -unity-font: resource(&apos;FlatSkin/Font/Roboto-Medium&apos;); height: 27px; width: 233px; color: rgb(255, 255, 255); top: 15px; left: 15px;" />
+    </ui:VisualElement>
+    <ui:VisualElement name="P2_objective" style="background-image: url(&apos;/Assets/UI/Obj_P2.png&apos;); width: 256px; height: 100px; position: absolute; bottom: 20px; left: auto; right: 20px;">
+        <ui:Label text="1/5: LET THERE BE LIGHT" display-tooltip-when-elided="true" name="P2_objective_title" style="font-size: 18px; -unity-font: resource(&apos;FlatSkin/Font/Roboto-BlackItalic&apos;); height: 27px; width: 233px; color: rgb(255, 255, 255); top: 15px; left: auto; -unity-text-align: upper-right; right: 0;" />
+        <ui:Label text="Find the light switch!" display-tooltip-when-elided="true" name="P1_objective_description" style="font-size: 14px; -unity-font: resource(&apos;FlatSkin/Font/Roboto-Medium&apos;); height: 27px; width: 233px; color: rgb(255, 255, 255); top: 15px; left: auto; right: 0; -unity-text-align: upper-right;" />
+    </ui:VisualElement>
+</ui:UXML>
