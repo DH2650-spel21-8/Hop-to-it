@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6668642687070924322}
   - component: {fileID: 6674406989608528618}
   - component: {fileID: 6635615583487785536}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6693138085304721676}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door (Interactable)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -119,7 +119,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6696928821240328440}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -3.8400002, y: -0.4643739, z: 5.7386994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 6635072226153881272}
   - component: {fileID: 6697930001602066258}
   - component: {fileID: 6697930001602066261}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6698475377309903324}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.16, y: 1.6693995, z: 1.18}
+  m_LocalPosition: {x: -0.16, y: 1.71, z: 1.14}
   m_LocalScale: {x: 100, y: 104.01095, z: 66.25611}
   m_Children: []
   m_Father: {fileID: 6693138085304721676}
@@ -225,8 +225,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.01179003, y: 0.011242988, z: 0.05221258}
-  m_Center: {x: -0.00013383987, y: 0.021205498, z: 0.0011908405}
+  m_Size: {x: 0.019447995, y: 0.025212327, z: 0.05221258}
+  m_Center: {x: -0.000013486764, y: 0.016579429, z: 0.0011908419}
 --- !u!65 &6697930001602066258
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -236,7 +236,7 @@ BoxCollider:
   m_GameObject: {fileID: 6698475377309903324}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.0016965055, y: 0.022806972, z: 0.052212615}
   m_Center: {x: -0.00006505893, y: 0.011403486, z: 0.0011908368}
@@ -257,5 +257,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DoorObject: {fileID: 6698475377309903324}
+  Frame: {fileID: 6696916388293742078}
   OpenAngle: 90
   OpenTime: 1

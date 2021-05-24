@@ -12,19 +12,28 @@ using UnityEngine.InputSystem;
 public class Interactable : MonoBehaviour
 {
     public bool Toggle = false;
+    public bool EnableInteraction = true;
     protected virtual void OnInteract(PlayerController player) {}
 
     private Action<InputAction.CallbackContext> _callback = null;
 
     public UnityEvent<bool> OnInteraction;
 
+    public UnityEvent OnAttemptedInteraction;
+
     protected virtual void OnTriggerEnter(Collider other)
     {
+
         if (other.TryGetComponent(out PlayerController controller))
         {
             // create callback to bind this Interactable to the player's controls as long as the player is within the trigger
             _callback = _ =>
             {
+                if (!EnableInteraction)
+                {
+                    OnAttemptedInteraction.Invoke();
+                    return;
+                }
                 OnInteract(controller);
                 OnInteraction.Invoke(Toggle);
             };
