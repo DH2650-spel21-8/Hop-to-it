@@ -18,23 +18,14 @@ public sealed class Objective : MonoBehaviour
 {
     public Interactable Requirement;
     public bool Complete;
-
-    [Tooltip("Whether a toggling Interactable will revert this Objective's completion state.")]
-    public bool AllowUncompletion;
     
     public UnityEvent<bool> OnCompletion;
 
     private void Start()
     {
-        if (!Requirement)
-        {
-            Debug.LogWarning("Need an Interactable in order to use an Objective!");
-            return;
-        }
-        
         Requirement.OnInteraction.AddListener(toggle =>
         {
-            if (toggle && AllowUncompletion)
+            if (toggle)
             {
                 Complete = !Complete;
                 OnCompletion.Invoke(Complete);

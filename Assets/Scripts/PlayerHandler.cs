@@ -21,13 +21,13 @@ public class PlayerHandler : MonoBehaviour
     // Represents every player in the game
     public List<PlayerController> Controllers = new List<PlayerController>();
 
-    private int _active = -1;
+    private int _active = 0;
 
     private PlayerInputManager _inputManager;
 
     private Mode _mode;
-    public InputAction PlayerSwapAction;
-    public InputAction ModeSwitchAction;
+    private InputAction _swapAction;
+    private InputAction _switchAction;
 
     private void Start()
     {
@@ -43,7 +43,8 @@ public class PlayerHandler : MonoBehaviour
             _cameras.Add(player.camera);
         }
 
-        SetActivePlayer(0);
+        _active = Controllers.Count - 1;
+        SetActivePlayer(1);
 
         _mode = Mode.Singleplayer;
         
@@ -52,15 +53,15 @@ public class PlayerHandler : MonoBehaviour
 
     private void SetupActions()
     {
-        /*var map = new InputActionMap("Swap");
-        SwapAction = map.AddAction("swap", binding: "<Keyboard>/1");
-        SwitchAction = map.AddAction("switchMode", binding: "<Keyboard>/2");*/
+        var map = new InputActionMap("Swap");
+        _swapAction = map.AddAction("swap", binding: "<Keyboard>/1");
+        _switchAction = map.AddAction("switchMode", binding: "<Keyboard>/2");
         
-        PlayerSwapAction.performed += context =>
+        _swapAction.performed += context =>
         {
             CyclePlayers();
         };
-        ModeSwitchAction.performed += context =>
+        _switchAction.performed += context =>
         {
             // Switch modes
             _mode = 1 - _mode;
@@ -77,7 +78,7 @@ public class PlayerHandler : MonoBehaviour
 
                     _inputManager.splitScreen = true;
                     
-                    PlayerSwapAction.Disable();
+                    _swapAction.Disable();
                     break;
                 case Mode.Singleplayer:
                     // In singleplayer mode only one controller is active at a time (set with SetActivePlayer(playerIndex)), and split-screen is disabled
@@ -91,15 +92,15 @@ public class PlayerHandler : MonoBehaviour
                     
                     _inputManager.splitScreen = false;
                     
-                    PlayerSwapAction.Enable();
+                    _swapAction.Enable();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         };
         
-        PlayerSwapAction.Enable();
-        ModeSwitchAction.Enable();
+        _swapAction.Enable();
+        _switchAction.Enable();
     }
 
     private void SetActivePlayer(int index)
@@ -109,31 +110,22 @@ public class PlayerHandler : MonoBehaviour
             return;
         }
 
-        if (_active == -1)
-        {
-            PlayerController newController = Controllers[index];
-            var newCam = _cameras[index];
-            
-            newCam.enabled = true;
-            newController.enabled = true;
-        }
-        else
-        {
-            int prev = _active;
+        int prev = _active;
 
-            PlayerController prevController = Controllers[prev];
-            PlayerController newController = Controllers[index];
-
-            var prevCam = _cameras[prev];
-            var newCam = _cameras[index];
-
-            prevCam.enabled = false;
-            newCam.enabled = true;
+        PlayerInput prevPlayer = _players[prev];
+        PlayerInput newPlayer = _players[index];
         
-            prevController.enabled = false;
-            newController.enabled = true;
-        }
+        PlayerController prevController = Controllers[prev];
+        PlayerController newController = Controllers[index];
+
+        var prevCam = _cameras[prev];
+        var newCam = _cameras[index];
+
+        prevCam.enabled = false;
+        newCam.enabled = true;
         
+        prevController.enabled = false;
+        newController.enabled = true;
         
         _active = index;
     }

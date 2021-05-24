@@ -22,8 +22,6 @@ public class Interactable : MonoBehaviour
     {
         if (other.TryGetComponent(out PlayerController controller))
         {
-            // show a prompt near the player or near the switch for activating
-            
             // create callback to bind this Interactable to the player's controls as long as the player is within the trigger
             _callback = _ =>
             {
