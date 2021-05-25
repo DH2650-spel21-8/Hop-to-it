@@ -50,6 +50,16 @@ public class Interactable : MonoBehaviour
         }
     }
 
+    public void SetInteractionEnabled(bool enabled)
+    {
+        EnableInteraction = enabled;
+    }
+
+    public static void Quit()
+    {
+        Application.Quit();
+    }
+
     protected virtual void OnTriggerExit(Collider other)
     {
         if (_callback == null) return;
