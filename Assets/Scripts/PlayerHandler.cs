@@ -30,9 +30,7 @@ public class PlayerHandler : MonoBehaviour
     private void Start()
     {
         _inputManager = GetComponent<PlayerInputManager>();
-
-        SetupActions();
-
+        
         foreach (PlayerController controller in Controllers)
         {
             var data = new PlayerData
@@ -55,6 +53,8 @@ public class PlayerHandler : MonoBehaviour
 
             _playerData.Add(data);
         }
+        
+        SetupActions();
 
         DisableAllPlayers();
         SetActivePlayer(0);
@@ -66,24 +66,7 @@ public class PlayerHandler : MonoBehaviour
         SwitchAction.performed += context => { SwitchMode(); };
 
         SwapAction.Enable();
-
-        if (InputSystem.devices.Count > 1) SwitchAction.Enable();
-
-        InputSystem.onDeviceChange += (device, change) =>
-        {
-            if (InputSystem.devices.Count > 1)
-            {
-                SwitchAction.Enable();
-            }
-            else
-            {
-                if (_mode == Mode.Multiplayer)
-                {
-                    SwitchMode();
-                }
-                SwitchAction.Disable();
-            }
-        };
+        SwitchAction.Enable();
     }
 
     private void SwitchMode()
