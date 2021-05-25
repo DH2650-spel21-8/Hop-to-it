@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UIElements;
 
 /**
  * Represents a completable objective in the game.
@@ -19,10 +20,25 @@ public sealed class Objective : MonoBehaviour
     public Interactable Requirement;
     public bool Complete;
     
+    [Space(10)]
+    public string Title;
+    [TextArea]
+    public string Description;
+
+    public UIDocument UI;
+    
     public UnityEvent<bool> OnCompletion;
 
     private void Start()
     {
+        if (UI)
+        {
+            var text = UI.rootVisualElement.Q<TextElement>("P1_objective_description");
+            if (text != null)
+            {
+                text.text = "Hahahaha";
+            }
+        }
         Requirement.OnInteraction.AddListener(toggle =>
         {
             if (toggle)

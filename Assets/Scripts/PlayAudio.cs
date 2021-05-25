@@ -18,7 +18,7 @@ public class PlayAudio : MonoBehaviour
     {
         GetComponent<Renderer>().enabled = false;
         PlaySound();
-        Destroy(gameObject, 0.5f);
+        Destroy(gameObject, audiosource.clip.length);
     }
 
     public void PlaySound()
