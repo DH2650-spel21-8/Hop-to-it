@@ -30,7 +30,7 @@ public class PlayerHandler : MonoBehaviour
     private void Start()
     {
         _inputManager = GetComponent<PlayerInputManager>();
-        
+
         SetupActions();
 
         foreach (PlayerController controller in Controllers)
@@ -39,10 +39,10 @@ public class PlayerHandler : MonoBehaviour
             {
                 Input = controller.PlayerInput,
                 Controller = controller,
-                Camera = controller.PlayerInput.camera,
+                Camera = controller.PlayerInput.camera
             };
             data.Listener = data.Camera.GetComponent<AudioListener>();
-            
+
             if (GameUI)
             {
                 var playerUI = GameUI.rootVisualElement.Q<VisualElement>(controller.UIReference);
@@ -52,13 +52,12 @@ public class PlayerHandler : MonoBehaviour
                     playerUI.style.display = DisplayStyle.None;
                 }
             }
+
             _playerData.Add(data);
         }
-        
+
         DisableAllPlayers();
         SetActivePlayer(0);
-        
-        
     }
 
     private void SetupActions()
@@ -67,10 +66,24 @@ public class PlayerHandler : MonoBehaviour
         SwitchAction.performed += context => { SwitchMode(); };
 
         SwapAction.Enable();
-        if (Gamepad.current != null)
+
+        if (InputSystem.devices.Count > 1) SwitchAction.Enable();
+
+        InputSystem.onDeviceChange += (device, change) =>
         {
-            SwitchAction.Enable();
-        }
+            if (InputSystem.devices.Count > 1)
+            {
+                SwitchAction.Enable();
+            }
+            else
+            {
+                if (_mode == Mode.Multiplayer)
+                {
+                    SwitchMode();
+                }
+                SwitchAction.Disable();
+            }
+        };
     }
 
     private void SwitchMode()
@@ -86,29 +99,24 @@ public class PlayerHandler : MonoBehaviour
                 {
                     data.Controller.enabled = true;
                     data.Camera.enabled = true;
+                    data.Input.neverAutoSwitchControlSchemes = false;
                     data.Input.ActivateInput();
-                    
+
                     data.UI.style.display = DisplayStyle.Flex;
                 }
 
-                _playerData[1].Input.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
-                if (Gamepad.current != null)
-                {
-                    _playerData[0].Input.SwitchCurrentControlScheme(Gamepad.current);
-                }
-                
                 _inputManager.splitScreen = true;
-                
+
                 SwapAction.Disable();
                 break;
             case Mode.Singleplayer:
                 // In singleplayer mode only one controller is active at a time (set with SetActivePlayer(playerIndex)), and split-screen is disabled
                 _inputManager.splitScreen = false;
-                
+
                 DisableAllPlayers();
 
                 SetActivePlayer(_active);
-                
+
                 SwapAction.Enable();
                 break;
             default:
@@ -136,7 +144,7 @@ public class PlayerHandler : MonoBehaviour
         if (_active == -1)
         {
             PlayerData data = _playerData[index];
-            
+
             data.Camera.enabled = true;
             data.Listener.enabled = true;
 
@@ -160,10 +168,10 @@ public class PlayerHandler : MonoBehaviour
 
             prevData.Controller.enabled = false;
             data.Controller.enabled = true;
-            
+
             prevData.Listener.enabled = false;
             data.Listener.enabled = true;
-            
+
             prevData.Input.DeactivateInput();
             data.Input.ActivateInput();
             data.Input.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
