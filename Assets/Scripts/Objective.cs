@@ -24,20 +24,15 @@ public sealed class Objective : MonoBehaviour
     public string Title;
     [TextArea]
     public string Description;
-
-    public UIDocument UI;
     
     public UnityEvent<bool> OnCompletion;
 
     private void Start()
     {
-        if (UI)
+        if (!Requirement)
         {
-            var text = UI.rootVisualElement.Q<TextElement>("P1_objective_description");
-            if (text != null)
-            {
-                text.text = "Hahahaha";
-            }
+            Debug.LogWarning("Objective without a requirement! Will be ignored.", this);
+            return;
         }
         Requirement.OnInteraction.AddListener(toggle =>
         {

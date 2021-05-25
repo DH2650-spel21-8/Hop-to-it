@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 3579323322834692684}
   - component: {fileID: 3579323324110390885}
   - component: {fileID: 3579323324110390882}
-  - component: {fileID: 3579323324110390883}
+  - component: {fileID: 2316727340021188013}
   m_Layer: 0
   m_Name: LightSwitch (Interactable)
   m_TagString: Untagged
@@ -225,7 +225,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &3579323324110390883
+--- !u!114 &2316727340021188013
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -234,10 +234,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3579323322834531948}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 793e32b3b6e04431a866ac519c568101, type: 3}
+  m_Script: {fileID: 11500000, guid: 4cc75785b290f25439107cafeb737975, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Toggle: 0
+  Toggle: 1
   EnableInteraction: 1
   OnInteraction:
     m_PersistentCalls:
@@ -257,6 +257,8 @@ MonoBehaviour:
   OnAttemptedInteraction:
     m_PersistentCalls:
       m_Calls: []
+  Lights:
+  - {fileID: 0}
 --- !u!1 &3579323322834531950
 GameObject:
   m_ObjectHideFlags: 0

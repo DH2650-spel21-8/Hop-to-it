@@ -23,7 +23,7 @@ public class Interactable : MonoBehaviour
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-
+        if (!enabled) return;
         if (other.TryGetComponent(out PlayerController controller))
         {
             // create callback to bind this Interactable to the player's controls as long as the player is within the trigger
@@ -40,7 +40,8 @@ public class Interactable : MonoBehaviour
 
             try
             {
-                controller.PlayerInput.currentActionMap.FindAction("Interact", true).performed += _callback;
+                if (controller.PlayerInput.currentActionMap != null)
+                    controller.PlayerInput.currentActionMap.FindAction("Interact", true).performed += _callback;
             }
             catch (ArgumentException ae)
             {

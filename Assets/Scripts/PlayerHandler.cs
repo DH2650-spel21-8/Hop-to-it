@@ -25,11 +25,13 @@ public class PlayerHandler : MonoBehaviour
 
     private PlayerInputManager _inputManager;
 
-    private Mode _mode;
+    private Mode _mode = Mode.Singleplayer;
 
     private void Start()
     {
         _inputManager = GetComponent<PlayerInputManager>();
+        
+        SetupActions();
 
         foreach (PlayerController controller in Controllers)
         {
@@ -37,8 +39,10 @@ public class PlayerHandler : MonoBehaviour
             {
                 Input = controller.PlayerInput,
                 Controller = controller,
-                Camera = controller.PlayerInput.camera
+                Camera = controller.PlayerInput.camera,
             };
+            data.Listener = data.Camera.GetComponent<AudioListener>();
+            
             if (GameUI)
             {
                 var playerUI = GameUI.rootVisualElement.Q<VisualElement>(controller.UIReference);
@@ -48,16 +52,13 @@ public class PlayerHandler : MonoBehaviour
                     playerUI.style.display = DisplayStyle.None;
                 }
             }
-
             _playerData.Add(data);
         }
-
+        
         DisableAllPlayers();
         SetActivePlayer(0);
-
-        _mode = Mode.Singleplayer;
-
-        SetupActions();
+        
+        
     }
 
     private void SetupActions()
@@ -66,7 +67,10 @@ public class PlayerHandler : MonoBehaviour
         SwitchAction.performed += context => { SwitchMode(); };
 
         SwapAction.Enable();
-        SwitchAction.Enable();
+        if (Gamepad.current != null)
+        {
+            SwitchAction.Enable();
+        }
     }
 
     private void SwitchMode()
@@ -77,32 +81,34 @@ public class PlayerHandler : MonoBehaviour
             case Mode.Multiplayer:
                 // In multiplayer mode, all controllers are active, and split-screen is enabled
                 // Cycling players is disabled in this mode
+
                 foreach (PlayerData data in _playerData)
                 {
                     data.Controller.enabled = true;
                     data.Camera.enabled = true;
-
+                    data.Input.ActivateInput();
+                    
                     data.UI.style.display = DisplayStyle.Flex;
                 }
 
+                _playerData[1].Input.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
+                if (Gamepad.current != null)
+                {
+                    _playerData[0].Input.SwitchCurrentControlScheme(Gamepad.current);
+                }
+                
                 _inputManager.splitScreen = true;
-
+                
                 SwapAction.Disable();
                 break;
             case Mode.Singleplayer:
                 // In singleplayer mode only one controller is active at a time (set with SetActivePlayer(playerIndex)), and split-screen is disabled
-                foreach (PlayerData data in _playerData)
-                {
-                    data.Controller.enabled = false;
-                    data.Camera.enabled = false;
-
-                    data.UI.style.display = DisplayStyle.None;
-                }
+                _inputManager.splitScreen = false;
+                
+                DisableAllPlayers();
 
                 SetActivePlayer(_active);
-
-                _inputManager.splitScreen = false;
-
+                
                 SwapAction.Enable();
                 break;
             default:
@@ -114,8 +120,10 @@ public class PlayerHandler : MonoBehaviour
     {
         foreach (PlayerData data in _playerData)
         {
-            data.Controller.enabled = false;
             data.Camera.enabled = false;
+            data.Listener.enabled = false;
+            data.Controller.enabled = false;
+            data.Input.DeactivateInput();
 
             data.UI.style.display = DisplayStyle.None;
         }
@@ -127,29 +135,38 @@ public class PlayerHandler : MonoBehaviour
 
         if (_active == -1)
         {
-            PlayerData newData = _playerData[index];
+            PlayerData data = _playerData[index];
+            
+            data.Camera.enabled = true;
+            data.Listener.enabled = true;
 
-            newData.Camera.enabled = true;
+            data.Controller.enabled = true;
+            data.Input.ActivateInput();
 
-            newData.Controller.enabled = true;
-
-            newData.UI.style.display = DisplayStyle.Flex;
+            data.UI.style.display = DisplayStyle.Flex;
         }
         else
         {
             int prev = _active;
 
             PlayerData prevData = _playerData[prev];
-            PlayerData newData = _playerData[index];
+            PlayerData data = _playerData[index];
 
             prevData.UI.style.display = DisplayStyle.None;
-            newData.UI.style.display = DisplayStyle.Flex;
+            data.UI.style.display = DisplayStyle.Flex;
 
             prevData.Camera.enabled = false;
-            newData.Camera.enabled = true;
+            data.Camera.enabled = true;
 
             prevData.Controller.enabled = false;
-            newData.Controller.enabled = true;
+            data.Controller.enabled = true;
+            
+            prevData.Listener.enabled = false;
+            data.Listener.enabled = true;
+            
+            prevData.Input.DeactivateInput();
+            data.Input.ActivateInput();
+            data.Input.SwitchCurrentControlScheme(Keyboard.current, Mouse.current);
         }
 
         _active = index;
@@ -180,5 +197,6 @@ public class PlayerHandler : MonoBehaviour
         public PlayerController Controller;
         public Camera Camera;
         public VisualElement UI;
+        public AudioListener Listener;
     }
 }

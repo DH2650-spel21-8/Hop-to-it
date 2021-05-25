@@ -1040,10 +1040,10 @@ MonoBehaviour:
   m_DistanceLimit: 0
   m_MinimumOcclusionTime: 0
   m_CameraRadius: 0.1
-  m_Strategy: 1
+  m_Strategy: 0
   m_MaximumEffort: 4
   m_SmoothingTime: 0
-  m_Damping: 0.2
+  m_Damping: 1
   m_DampingWhenOccluded: 0.1
   m_OptimalTargetDistance: 1
 --- !u!114 &732505862928161918
@@ -3512,6 +3512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 4
   TurnSmoothTime: 0.1
+  UIReference: 
   Camera: {fileID: 1933556844505533005}
   PlayerInput: {fileID: 8026707813540752466}
   CharacterAnimator: {fileID: 3600601535917174783}

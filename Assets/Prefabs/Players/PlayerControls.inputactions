@@ -169,7 +169,7 @@
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "ArrowKeys",
+                    "groups": "ArrowKeys;WASD",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -199,8 +199,8 @@
                     "isOR": false
                 },
                 {
-                    "devicePath": "<Gamepad>",
-                    "isOptional": true,
+                    "devicePath": "<Mouse>",
+                    "isOptional": false,
                     "isOR": false
                 }
             ]
@@ -222,6 +222,11 @@
             "devices": [
                 {
                     "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

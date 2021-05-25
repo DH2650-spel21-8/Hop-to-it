@@ -1,18 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LightSwitch : Interactable
 {
-    public Light Light;
+    public List<Light> Lights;
 
     protected override void OnInteract(PlayerController player)
     {
         if (Toggle)
         {
-            Light.enabled = !Light.enabled;
+            foreach (Light light in Lights)
+            {
+                light.enabled = !light.enabled;
+            }
         }
         else
         {
-            Light.enabled = true;
+            foreach (Light light in Lights)
+            {
+                light.enabled = true;
+            }
         }
     }
 }
